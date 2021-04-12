@@ -16,11 +16,19 @@ passport.use(new GoogleStrategy({
     callbackURL: process.env.GOOGLE_CALLBACK_URL
 },
 function(accessToken, refreshToken, profile, done) {
-    User.findOrCreate({ googleId: profile.id }, function (err, user) {
-        email = profile.emails[0].value
-        console.log(profile.emails[0].value)
-        if(email.includes('@student.tdtu.edu.vn')) console.log('true')
-        else err = "NOT STUDENT MAIL"
-        return done(err, user);
-    });
+    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+    //     email = profile.emails[0].value
+    //     console.log(profile.emails[0].value)
+    //     if(email.includes('@student.tdtu.edu.vn')) console.log('true')
+    //     else err = "NOT STUDENT MAIL"
+    //     return done(err, user);
+    // });
+    email = profile.emails[0].value
+    if(email.includes('@student.tdtu.edu.vn')){
+        console.log('true')
+    }
+    else {
+        console.log('false')
+    }
+    return done(null ,profile);
 }))

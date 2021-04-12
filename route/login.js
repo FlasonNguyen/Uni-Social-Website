@@ -8,6 +8,7 @@ const User = require('../models/user')
 router.get('/', (req, res) => {
     res.render('login')
 })
+
 //LOGIN HANDLE
 router.post('/',(req, res) => {
     const {email, password} = req.body
@@ -34,5 +35,7 @@ router.post('/',(req, res) => {
         res.render('login', {errors})
     }else res.send('NICEEEE')
 })
+
+
 
 module.exports = router

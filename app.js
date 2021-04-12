@@ -17,10 +17,17 @@ require('./googleoauth2')
 
 app.use('/auth/google', require('./route/google'))
 //---------------------------------------------GOOGLE OAUTH2------------------------------------------------------------
-
+app.use('/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: true }),
+);
 
 app.use('/', require('./route/index'))
-app.use('/login', require('./route/login'))
+app.use('/login', passport.authenticate('local', { successRedirect: '/',
+                                        failureRedirect: '/login',
+                                        failureFlash: true },
+                                        require('./route/login')))
 
 
 app.listen(8080, () => console.log('http://localhost:8080'))
