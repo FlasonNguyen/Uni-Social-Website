@@ -25,10 +25,10 @@ function(accessToken, refreshToken, profile, done) {
     // });
     email = profile.emails[0].value
     if(email.includes('@student.tdtu.edu.vn')){
-        console.log('true')
+        err = "TDTU STUDENT"
     }
     else {
-        console.log('false')
+        err = "NOT TDTU STUDENT"
     }
-    return done(null ,profile);
+    return done(err ,profile);
 }))

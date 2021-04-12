@@ -1,5 +1,6 @@
 const express = require('express')
 const passport = require('passport')
+const mongoose = require('mongoose')
 const db = require('./db')
 require('dotenv').config()
 
@@ -7,6 +8,7 @@ const app = express()
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 app.use(express.urlencoded({ extended: false}))
+
 
 //---------------------------------------------GOOGLE OAUTH2------------------------------------------------------------
 // Initializes passport and passport sessions
@@ -17,17 +19,10 @@ require('./googleoauth2')
 
 app.use('/auth/google', require('./route/google'))
 //---------------------------------------------GOOGLE OAUTH2------------------------------------------------------------
-app.use('/login',
-  passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login',
-                                   failureFlash: true }),
-);
 
+require('./local-login')
 app.use('/', require('./route/index'))
-app.use('/login', passport.authenticate('local', { successRedirect: '/',
-                                        failureRedirect: '/login',
-                                        failureFlash: true },
-                                        require('./route/login')))
+app.use('/login',require('./route/login'))
 
 
 app.listen(8080, () => console.log('http://localhost:8080'))

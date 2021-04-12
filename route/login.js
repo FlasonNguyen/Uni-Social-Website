@@ -10,7 +10,10 @@ router.get('/', (req, res) => {
 })
 
 //LOGIN HANDLE
-router.post('/',(req, res) => {
+router.post('/', passport.authenticate('local', { successRedirect: '/',
+                                                failureRedirect: '/login',
+                                                failureFlash: true }),
+(req, res) => {
     const {email, password} = req.body
     let errors = []
     if(!email || !password) {
